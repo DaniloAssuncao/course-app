@@ -1,6 +1,6 @@
 "use client";
 
-import { Compass, Layout } from "lucide-react";
+import { Cloud, Layout, Rabbit } from "lucide-react";
 import { SidebarItem } from "./sidebar-item";
 
 const guestRoutes = [
@@ -10,9 +10,14 @@ const guestRoutes = [
     href: "/",
   },
   {
-    icon: Compass,
+    icon: Cloud,
     label: "Browse",
     href: "/search",
+  },
+  {
+    icon: Rabbit,
+    label: "Browse",
+    href: "/rabbit",
   },
 ];
 
