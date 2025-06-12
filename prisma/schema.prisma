@@ -1,0 +1,63 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Video {
+  id               String   @id @default(uuid())
+  
+  // Mux identifiers
+  uploadId         String?  @unique // Direct upload ID
+  assetId          String?  @unique // Mux asset ID (when asset is created)
+  playbackId       String?  @unique // Playback ID for streaming
+  
+  // Asset status and metadata
+  status           String   @default("uploading") // uploading, preparing, ready, errored
+  duration         Float?   // Video duration in seconds
+  aspectRatio      String?  // e.g., "16:9"
+  
+  // Video quality and encoding
+  videoQuality     String?  // basic, plus
+  encodingTier     String?  // baseline, smart
+  maxStoredResolution String? // HD, FHD, UHD
+  maxStoredFrameRate  Float?  // e.g., 29.97
+  
+  // Access and policies
+  masterAccess     String?  // none, temporary
+  playbackPolicy   String[] @default(["public"]) // public, signed
+  
+  // File information
+  fileSize         BigInt?  // File size in bytes
+  audioOnly        Boolean  @default(false)
+  
+  // Mux timestamps (stored as strings as Mux sends them)
+  muxCreatedAt     String?  // Mux asset creation timestamp
+  muxUpdatedAt     String?  // Mux asset last update timestamp
+  
+  // Error handling
+  errorType        String?  // Error type if status is "errored"
+  errorMessage     String?  // Error message details
+  
+  // User association
+  userId           String   // Clerk user ID
+  
+  // Database timestamps
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  
+  @@index([userId])
+  @@index([status])
+  @@index([uploadId])
+  @@index([assetId])
+}

@@ -1,0 +1,10 @@
+{
+  "type": "video.upload.asset_created",
+  "data": {
+    "id": "dGMCAX5oS01Od02qDtS6GUA6PyZ01rPQl3Me02wJ3R4T029Q",
+    "upload_id": "zyIJ00uhaoU31fStqyq5PzQRwEcfj2602ketCIERXj01I00",
+    "status": "preparing",
+    "created_at": "2025-06-12T15:30:00Z",
+    "updated_at": "2025-06-12T15:30:00Z"
+  }
+} 
