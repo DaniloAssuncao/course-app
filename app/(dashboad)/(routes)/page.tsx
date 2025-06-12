@@ -6,6 +6,8 @@ import { useState, useEffect, useCallback } from "react";
 import { toast } from "sonner";
 
 import MuxUploader from "@mux/mux-uploader-react";
+import MuxPlayer from "@mux/mux-player-react";
+import { Button } from "@/components/ui/button";
 
 interface VideoRecord {
   id: string;
@@ -91,6 +93,17 @@ const VideoCard = ({ video }: { video: VideoRecord }) => (
         <span className="font-medium">Quality:</span>
         <span className="text-gray-600 ml-2">{video.videoQuality}</span>
       </div>
+    )}
+    {video.status === "ready" && video.playbackId && (
+      
+      <MuxPlayer
+        playbackId={video.playbackId}
+        metadata={{
+          video_id: video.id,
+          video_title: `Video ${video.id}`,
+          viewer_user_id: "user-id-007",
+        }}
+      />
     )}
   </div>
 );
@@ -361,24 +374,24 @@ export default function Home() {
           </div>
         )}
         <div className="ml-auto flex items-center gap-2">
-          <button
+          <Button
             onClick={cleanupTestVideos}
-            className="flex items-center gap-2 px-3 py-1 text-sm bg-red-500 text-white rounded hover:bg-red-600"
+            variant="destructive"
             tabIndex={0}
             aria-label="Clean Up Test Videos"
             onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') cleanupTestVideos(); }}
           >
-            Clean Up Test Videos
-          </button>
-          <button
+            Clean Up Videos
+          </Button>
+          <Button
             onClick={debugDatabase}
-            className="flex items-center gap-2 px-3 py-1 text-sm bg-purple-500 text-white rounded hover:bg-purple-600"
+            className="flex items-center gap-2  bg-purple-500 text-white rounded hover:bg-purple-600"
             tabIndex={0}
             aria-label="Debug DB"
             onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') debugDatabase(); }}
           >
             Debug DB
-          </button>
+          </Button>
         </div>
       </div>
       
@@ -401,7 +414,7 @@ export default function Home() {
                 Auto-refreshing...
               </span>
             )}
-            <button
+            <Button
               onClick={fetchVideos}
               disabled={refreshing}
               className="px-3 py-1 text-sm bg-blue-500 text-white rounded hover:bg-blue-600 disabled:opacity-50"
@@ -410,7 +423,7 @@ export default function Home() {
               onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') fetchVideos(); }}
             >
               {refreshing ? "Refreshing..." : "Refresh"}
-            </button>
+            </Button>
           </div>
         </div>
         

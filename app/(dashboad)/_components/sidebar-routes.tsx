@@ -6,17 +6,17 @@ import { SidebarItem } from "./sidebar-item";
 const guestRoutes = [
   {
     icon: Layout,
-    label: "Dashboard",
+    label: "Mux",
     href: "/",
   },
   {
     icon: Cloud,
-    label: "Browse",
+    label: "Cloudflare",
     href: "/search",
   },
   {
     icon: Rabbit,
-    label: "Browse",
+    label: "Rabbit",
     href: "/rabbit",
   },
 ];
